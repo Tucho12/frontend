@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // Create a single shared socket instance
-const socket = io("http://localhost:5000", {
+const socket = io("https://backend-9a4x.onrender.com", {
   withCredentials: true,
   transports: ["websocket"], // Use WebSocket for better performance
   autoConnect: false, // Prevent automatic connection unless you explicitly call connect()

@@ -524,30 +524,6 @@ html, body {
     margin-bottom: 20px;
   }
 }
-body.light {
-  background-color: #f8f9fa;
-  color: #212529;
-}
-body.dark {
-  background-color: #121212;
-  color: #f8f9fa;
-}
-body.dark .navbar,
-body.dark .card,
-body.dark .footer {
-  background-color: #1f1f1f !important;
-  color: #f8f9fa !important;
-}
-
-body.dark .nav-link,
-body.dark .footer-link {
-  color: #f8f9fa !important;
-}
-
-body.dark .btn-outline-primary {
-  border-color: #f8f9fa;
-  color: #f8f9fa;
-}
 
 
 
@@ -577,4 +553,61 @@ body.dark .btn-outline-primary {
 .client-logo:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+  
+  .responsive-chart {
+    height: 250px !important;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+
+  ul {
+    padding-left: 20px;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .account-header {
+    padding: 1px 1px;
+    align-items: right;
+  }
+
+  .account-info {
+    align-items: flex-end;
+  }
+
+  
+
+  .account {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .account-icon {
+    font-size: 24px;
+    padding: 3px;
+  }
+
+
+  .account h6 {
+    font-size: 15px;
+  }
 }

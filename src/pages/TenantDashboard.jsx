@@ -351,6 +351,8 @@ const TenantDashboard = () => {
             }}
           >
             <div className="account">
+              <FaUser className="account-icon" />
+              <h6>{loggedInUser.email}</h6>
               <div
                 className="notifications"
                 style={{ position: "relative", cursor: "pointer" }}
@@ -424,7 +426,9 @@ const TenantDashboard = () => {
                         const token = localStorage.getItem("token");
                         try {
                           const res = await fetch(
-                            `${import.meta.env.VITE_API_BASE_URL}/api/notifications/mark-read`,
+                            `${
+                              import.meta.env.VITE_API_BASE_URL
+                            }/api/notifications/mark-read`,
                             {
                               method: "PUT",
                               headers: { Authorization: `Bearer ${token}` },
@@ -450,8 +454,6 @@ const TenantDashboard = () => {
                   </div>
                 )}
               </div>
-              <FaUser className="account-icon" />
-              <h6>{loggedInUser.email}</h6>
             </div>
           </div>
         </header>

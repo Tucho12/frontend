@@ -94,19 +94,18 @@ const Listings = () => {
                 {/* Image section */}
                 {prop.images && prop.images.length > 0 ? (
                   <img
-                    src={prop.images[0]} // Use full Cloudinary URL directly
+                    src={prop.images[0]}
                     alt={`${prop.title || "Property"} - Image`}
+                    className="img-fluid rounded mt-3"
                     style={{
-                      width: "320px",
-                      margin: "15px auto 0",
+                      width: "100%",
                       height: "250px",
                       objectFit: "cover",
-                      borderRadius: "12px",
                     }}
                   />
                 ) : (
                   <img
-                    src="/default-image-path.jpg" 
+                    src="/default-image-path.jpg"
                     alt="No image available"
                     style={{
                       display: "flex",

@@ -343,6 +343,7 @@ const UserManagement = () => {
   );
 };
 
+
 const PropertyManagement = () => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -362,10 +363,8 @@ const PropertyManagement = () => {
         const propertiesWithLandlord = await Promise.all(
           response.data.map(async (property) => {
             if (typeof property.landlord === "object") {
-              // already populated → assign to landlordData
               return { ...property, landlordData: property.landlord };
             }
-            // fetch landlord data
             const landlordResponse = await axios.get(
               `${import.meta.env.VITE_API_BASE_URL}/api/auth/user/${
                 property.landlord
@@ -404,8 +403,8 @@ const PropertyManagement = () => {
           },
         }
       );
-      setProperties(
-        properties.map((property) =>
+      setProperties((prev) =>
+        prev.map((property) =>
           property._id === propertyId
             ? { ...property, status: "approved" }
             : property
@@ -425,12 +424,12 @@ const PropertyManagement = () => {
         {},
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      setProperties(
-        properties.map((property) =>
+      setProperties((prev) =>
+        prev.map((property) =>
           property._id === propertyId
             ? { ...property, status: "rejected" }
             : property
@@ -454,8 +453,8 @@ const PropertyManagement = () => {
           },
         }
       );
-      setProperties(
-        properties.filter((property) => property._id !== propertyId)
+      setProperties((prev) =>
+        prev.filter((property) => property._id !== propertyId)
       );
     } catch (error) {
       console.error("Error deleting property:", error);
@@ -467,56 +466,68 @@ const PropertyManagement = () => {
   }
 
   return (
-    <div className="section-card">
-      <h3 className="mb-5 text-center">Property Management</h3>
-      <hr />
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Owner</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {properties.map((property) => (
-            <tr key={property._id}>
-              <td>
-                {property.images && property.images.length > 0 ? (
-                  <img
-                    src={property.images[0]}
-                    alt={property.title}
-                    style={{
-                      width: "100px",
-                      height: "70px",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  "No Image"
-                )}
-              </td>
-              <td>{property.title}</td>
-              <td>{property.location}</td>
-              <td>
-                {property.landlordData
-                  ? `${property.landlordData.name} (${property.landlordData.email})`
-                  : "Unknown"}
-              </td>
-              <td>
-                <button
-                  onClick={() => handleDelete(property._id)}
-                  className="btn btn-outline-danger btn-sm"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="container my-4">
+      <div className="card shadow p-4">
+        <h3 className="mb-4 text-center">Property Management</h3>
+        <div className="table-responsive">
+          <table className="table table-bordered table-hover align-middle">
+            <thead className="table-light">
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Owner</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {properties.map((property) => (
+                <tr key={property._id}>
+                  <td>
+                    {property.images?.[0] ? (
+                      <img
+                        src={property.images[0]}
+                        alt={property.title}
+                        style={{
+                          width: "100px",
+                          height: "70px",
+                          objectFit: "cover",
+                        }}
+                        className="img-thumbnail"
+                      />
+                    ) : (
+                      <span className="text-muted">No Image</span>
+                    )}
+                  </td>
+                  <td>{property.title}</td>
+                  <td>{property.location}</td>
+                  <td>
+                    {property.landlordData ? (
+                      <>
+                        <strong>{property.landlordData.name}</strong>
+                        <br />
+                        <small>{property.landlordData.email}</small>
+                      </>
+                    ) : (
+                      "Unknown"
+                    )}
+                  </td>
+                  <td>
+                    <div className="d-flex flex-column flex-sm-row gap-2">
+                      <button
+                        onClick={() => handleDelete(property._id)}
+                        className="btn btn-outline-danger btn-sm"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };
@@ -1275,6 +1286,9 @@ const AdminDashboard = () => {
           >
             <div className="account">
               {/* 🔔 Notifications */}
+              
+              <FaUser className="account-icon" /> {/* Account Icon */}
+              <h6>{loggedInUser.email}</h6>
               <div
                 className="notifications"
                 style={{ position: "relative", cursor: "pointer" }}
@@ -1384,8 +1398,6 @@ const AdminDashboard = () => {
                   </div>
                 )}
               </div>
-              <FaUser className="account-icon" /> {/* Account Icon */}
-              <h6>{loggedInUser.email}</h6>
             </div>
           </div>
         </header>

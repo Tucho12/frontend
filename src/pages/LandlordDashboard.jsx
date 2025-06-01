@@ -483,12 +483,12 @@ const LandlordDashboard = () => {
                 Support
               </Link>
             </li>
-             <li>
-                          <Link to="/landlord/settings">
-                                      <FaCog style={{ marginRight: "10px" }} />
-                                      Settings
-                                    </Link>
-                                  </li>
+            <li>
+              <Link to="/landlord/settings">
+                <FaCog style={{ marginRight: "10px" }} />
+                Settings
+              </Link>
+            </li>
           </ul>
         </div>
         <button className="logout-btn" onClick={logout}>
@@ -511,105 +511,6 @@ const LandlordDashboard = () => {
           >
             <div className="account">
               {/* 🔔 Notifications */}
-              <div
-                className="notifications"
-                style={{ position: "relative", cursor: "pointer" }}
-                onClick={() => setShowNotifications(!showNotifications)}
-              >
-                <FaBell size={20} />
-                {unreadCount > 0 && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      top: "-5px",
-                      right: "-8px",
-                      backgroundColor: "red",
-                      color: "white",
-                      fontSize: "12px",
-                      borderRadius: "50%",
-                      padding: "2px 6px",
-                    }}
-                  >
-                    {unreadCount}
-                  </span>
-                )}
-                {showNotifications && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "30px",
-                      right: "0",
-                      backgroundColor: "white",
-                      boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
-                      padding: "10px",
-                      width: "250px",
-                      zIndex: 1000,
-                    }}
-                  >
-                    <div style={{ fontWeight: "bold", marginBottom: "8px" }}>
-                      Notifications
-                    </div>
-                    {notifications.filter((n) => !n.isRead).length === 0 ? (
-                      <div style={{ fontStyle: "italic" }}>
-                        No new notifications
-                      </div>
-                    ) : (
-                      notifications
-                        .filter((n) => !n.isRead)
-                        .map((n, i) => (
-                          <div
-                            key={i}
-                            style={{
-                              borderBottom: "1px solid #eee",
-                              padding: "6px 0",
-                              fontSize: "14px",
-                            }}
-                          >
-                            {n.message}
-                          </div>
-                        ))
-                    )}
-                    <button
-                      style={{
-                        marginTop: "8px",
-                        padding: "4px 8px",
-                        fontSize: "12px",
-                        backgroundColor: "#007bff",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                      }}
-                      onClick={async () => {
-                        const token = localStorage.getItem("token");
-                        try {
-                          const res = await fetch(
-                            `${import.meta.env.VITE_API_BASE_URL}/api/notifications/mark-read`,
-                            {
-                              method: "PUT",
-                              headers: { Authorization: `Bearer ${token}` },
-                            }
-                          );
-                          if (res.ok) {
-                            setNotifications((prev) =>
-                              prev.map((n) => ({ ...n, isRead: true }))
-                            );
-                            setUnreadCount(0);
-                            setShowNotifications(false);
-                          }
-                        } catch (err) {
-                          console.error(
-                            "Error marking notifications as read",
-                            err
-                          );
-                        }
-                      }}
-                    >
-                      Mark all as read
-                    </button>
-                  </div>
-                )}
-              </div>
 
               {/* 📨 Messenger Icon */}
               <div
@@ -817,6 +718,107 @@ const LandlordDashboard = () => {
               {/* Account Icon */}
               <FaUser className="account-icon" />
               <h6>{loggedInUser.email}</h6>
+              <div
+                className="notifications"
+                style={{ position: "relative", cursor: "pointer" }}
+                onClick={() => setShowNotifications(!showNotifications)}
+              >
+                <FaBell size={20} />
+                {unreadCount > 0 && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      right: "-8px",
+                      backgroundColor: "red",
+                      color: "white",
+                      fontSize: "12px",
+                      borderRadius: "50%",
+                      padding: "2px 6px",
+                    }}
+                  >
+                    {unreadCount}
+                  </span>
+                )}
+                {showNotifications && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "30px",
+                      right: "0",
+                      backgroundColor: "white",
+                      boxShadow: "0px 4px 8px rgba(0,0,0,0.2)",
+                      padding: "10px",
+                      width: "250px",
+                      zIndex: 1000,
+                    }}
+                  >
+                    <div style={{ fontWeight: "bold", marginBottom: "8px" }}>
+                      Notifications
+                    </div>
+                    {notifications.filter((n) => !n.isRead).length === 0 ? (
+                      <div style={{ fontStyle: "italic" }}>
+                        No new notifications
+                      </div>
+                    ) : (
+                      notifications
+                        .filter((n) => !n.isRead)
+                        .map((n, i) => (
+                          <div
+                            key={i}
+                            style={{
+                              borderBottom: "1px solid #eee",
+                              padding: "6px 0",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {n.message}
+                          </div>
+                        ))
+                    )}
+                    <button
+                      style={{
+                        marginTop: "8px",
+                        padding: "4px 8px",
+                        fontSize: "12px",
+                        backgroundColor: "#007bff",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                      }}
+                      onClick={async () => {
+                        const token = localStorage.getItem("token");
+                        try {
+                          const res = await fetch(
+                            `${
+                              import.meta.env.VITE_API_BASE_URL
+                            }/api/notifications/mark-read`,
+                            {
+                              method: "PUT",
+                              headers: { Authorization: `Bearer ${token}` },
+                            }
+                          );
+                          if (res.ok) {
+                            setNotifications((prev) =>
+                              prev.map((n) => ({ ...n, isRead: true }))
+                            );
+                            setUnreadCount(0);
+                            setShowNotifications(false);
+                          }
+                        } catch (err) {
+                          console.error(
+                            "Error marking notifications as read",
+                            err
+                          );
+                        }
+                      }}
+                    >
+                      Mark all as read
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </header>

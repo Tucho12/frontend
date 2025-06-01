@@ -119,7 +119,11 @@ const LandlordHome = () => {
         }}
       >
         {/* Bar Chart */}
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer
+          width="100%"
+          height={350}
+          className="responsive-chart"
+        >
           <BarChart
             data={data}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -140,7 +144,11 @@ const LandlordHome = () => {
         </ResponsiveContainer>
 
         {/* Pie Chart */}
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer
+          width="100%"
+          height={350}
+          className="responsive-chart"
+        >
           <PieChart>
             <Pie
               data={data}

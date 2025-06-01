@@ -99,9 +99,9 @@ const TenantBookings = ({ user }) => {
       const token = localStorage.getItem("token");
       const decodedToken = jwtDecode(token); // Decode the token to get user ID
       const userId = decodedToken.id;
-      const propertyId = selectedBooking.property._id; // Ensure you have the correct property ID
+      const propertyId = selectedBooking.property._id; 
       const messageData = {
-        sender: userId, // Tenant ID
+        sender: userId, 
         receiver: selectedBooking.property.landlord._id, // Landlord ID
         property: selectedBooking.property._id, // Full property object (not just ID)
         content: newMessage, // The message content
@@ -258,14 +258,14 @@ const TenantBookings = ({ user }) => {
                     booking.property.images.map((image, index) => (
                       <img
                         key={index}
-                        src={`${import.meta.env.VITE_API_BASE_URL}${image}`}
+                        src={image} // ✅ use image here, which is defined in map
                         alt={`${booking.property.title} - Image ${index + 1}`}
+                        className="img-fluid mb-2 rounded"
                         style={{
-                          width: "320px",
-                          margin: "15px",
-                          height: "250px",
+                          width: "100%",
+                          maxWidth: "100%",
+                          height: "auto",
                           objectFit: "cover",
-                          borderRadius: "12px",
                         }}
                       />
                     ))
@@ -273,6 +273,7 @@ const TenantBookings = ({ user }) => {
                     <p>No images available for this property.</p>
                   )}
                 </div>
+
                 <h5 className="mt-3">{booking.property.title}</h5>
                 <p>
                   <strong>Location:</strong> {booking.property.location}

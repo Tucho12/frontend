@@ -83,7 +83,7 @@ const PropertyList = () => {
                 </Link>
               </div>
               <div className="card-body">
-                <h3 style={{ color: "blue" }}>{prop.propertyType}</h3>
+                <h5 style={{ color: "blue" }}>{prop.title}</h5>
                 <p className="card-text">{prop.description}</p>
 
                 <a

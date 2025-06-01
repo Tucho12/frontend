@@ -441,7 +441,6 @@ const handleBookClick = (property) => {
                     left: "10px",
                     fontWeight: "bold",
                     color: "#F5C518",
-                    // transition: "background-color 0.3s",
                   }}
                 >
                   {prop.price} ETB
@@ -453,7 +452,6 @@ const handleBookClick = (property) => {
                     position: "absolute",
                     bottom: "10px",
                     right: "10px",
-                    // backgroundColor: "#007bff",
                     borderRadius: "20px",
                     padding: "8px 16px",
                     fontWeight: "bold",
@@ -465,7 +463,7 @@ const handleBookClick = (property) => {
                 </button>
               </div>
               <div className="card-body">
-                <h3 style={{ color: "blue" }}>{prop.propertyType}</h3>
+                <h5 style={{ color: "blue" }}>{prop.title}</h5>
                 <p className="card-text">{prop.description}</p>
 
                 <p

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode as jwt_decode } from "jwt-decode";
+import { FaArrowLeft } from "react-icons/fa"; 
 
 const Login = ({ setUserRole }) => {
   const navigate = useNavigate();
@@ -112,6 +113,21 @@ const Login = ({ setUserRole }) => {
             Register here
           </button>
         </p>
+        <div>
+          <button
+            className="btn btn-outline-success d-flex align-items-center justify-content-center p-2"
+            onClick={() => navigate("/")}
+            style={{
+              position: "fixed",
+              top: "15px",
+              left: "20px",
+              width: "40px",
+              height: "30px",
+            }}
+          >
+            <FaArrowLeft />
+          </button>
+        </div>
       </div>
     </div>
   );

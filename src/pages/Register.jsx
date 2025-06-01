@@ -1,6 +1,7 @@
 // src/pages/Register.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -31,7 +32,6 @@ const Register = () => {
           body: JSON.stringify(userData),
         }
       );
-      
 
       const data = await response.json();
       console.log("Response status:", response.status);
@@ -49,7 +49,6 @@ const Register = () => {
       alert("An error occurred. Please try again later.");
     }
   };
-
 
   return (
     <div className="register-container">
@@ -135,6 +134,21 @@ const Register = () => {
             Login here
           </button>
         </p>
+        <div>
+          <button
+            className="btn btn-outline-primary d-flex align-items-center justify-content-center p-2"
+            onClick={() => navigate("/")}
+            style={{
+              position: "fixed",
+              top: "15px",
+              left: "20px",
+              width: "40px",
+              height: "30px",
+            }}
+          >
+            <FaArrowLeft />
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 // src/pages/AdminDashboard.jsx
-import React, {useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -100,7 +100,7 @@ const Analytics = () => {
   return (
     <div className="container my-5 analytics-dashboard">
       <h2 className="text-center mb-4">📊 Analytics Dashboard</h2>
-     
+
       <div className="row mb-4">
         <div className="col-md-4">
           <div className="card text-center shadow-sm stat-card">
@@ -147,75 +147,74 @@ const Analytics = () => {
   );
 };
 
-const UserManagement = () => { 
+const UserManagement = () => {
   const [users, setUsers] = useState([]);
-const [newUser, setNewUser] = useState({
-  name: "",
-  email: "",
-  role: "",
-  password: "",
-});
-const [editUserId, setEditUserId] = useState(null);
-const [editRole, setEditRole] = useState("");
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    role: "",
+    password: "",
+  });
+  const [editUserId, setEditUserId] = useState(null);
+  const [editRole, setEditRole] = useState("");
 
-useEffect(() => {
-  const fetchUsers = async () => {
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/auth/admin/users`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const handleAddUser = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/auth/admin/users`,
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`,
+        newUser,
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          withCredentials: true,
         }
       );
-      setUsers(response.data);
+      setUsers([...users, newUser]);
+      setNewUser({ name: "", email: "", role: "", password: "" });
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error adding user:", error);
     }
   };
 
-  fetchUsers();
-}, []);
-
-const handleAddUser = async (e) => {
-  e.preventDefault();
-  try {
-    await axios.post(
-      `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`,
-      newUser,
-      {
-        withCredentials: true,
-      }
-    );
-    setUsers([...users, newUser]); 
-    setNewUser({ name: "", email: "", role: "", password: "" }); 
-  } catch (error) {
-    console.error("Error adding user:", error);
-  }
-};
-
-// Delete user
-const handleDeleteUser = async (userId) => {
-
-   const confirmDelete = window.confirm("Do you want to delete this user?");
-   if (!confirmDelete) return;
-  const token = localStorage.getItem("token");
-  try {
-    await await axios.delete(
-      `${import.meta.env.VITE_API_BASE_URL}/api/auth/admin/users/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-    setUsers(users.filter((user) => user._id !== userId)); 
-  } catch (error) {
-    console.error("Error deleting user:", error);
-  }
-};
+  // Delete user
+  const handleDeleteUser = async (userId) => {
+    const confirmDelete = window.confirm("Do you want to delete this user?");
+    if (!confirmDelete) return;
+    const token = localStorage.getItem("token");
+    try {
+      await await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/admin/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        }
+      );
+      setUsers(users.filter((user) => user._id !== userId));
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -342,7 +341,7 @@ const handleDeleteUser = async (userId) => {
       </div>
     </div>
   );
-}
+};
 
 const PropertyManagement = () => {
   const [properties, setProperties] = useState([]);
@@ -360,7 +359,6 @@ const PropertyManagement = () => {
           }
         );
 
-        // Optional: populate landlord data (if not already populated in API response)
         const propertiesWithLandlord = await Promise.all(
           response.data.map(async (property) => {
             if (typeof property.landlord === "object") {
@@ -381,7 +379,6 @@ const PropertyManagement = () => {
             return { ...property, landlordData: landlordResponse.data };
           })
         );
-
 
         setProperties(propertiesWithLandlord);
       } catch (error) {
@@ -465,7 +462,6 @@ const PropertyManagement = () => {
     }
   };
 
-
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -490,9 +486,7 @@ const PropertyManagement = () => {
               <td>
                 {property.images && property.images.length > 0 ? (
                   <img
-                    src={`${import.meta.env.VITE_API_BASE_URL}${
-                      property.images[0]
-                    }`}
+                    src={property.images[0]}
                     alt={property.title}
                     style={{
                       width: "100px",
@@ -628,7 +622,6 @@ const PaymentManagement = () => {
           setError("You must be logged in.");
           return;
         }
-
 
         const response = await axios.get(
           `${import.meta.env.VITE_API_BASE_URL}/api/admin/payments`,
@@ -885,9 +878,15 @@ const Settings = () => {
             <h4>User Profile</h4>
             {profile && Object.keys(profile).length > 0 ? (
               <div>
-                <p><strong>Name:</strong> {profile.name}</p>
-                <p><strong>Email:</strong> {profile.email}</p>
-                <p><strong>Role:</strong> {profile.role}</p>
+                <p>
+                  <strong>Name:</strong> {profile.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {profile.email}
+                </p>
+                <p>
+                  <strong>Role:</strong> {profile.role}
+                </p>
               </div>
             ) : (
               <p>No profile found.</p>
@@ -902,7 +901,9 @@ const Settings = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="name" className="form-label">Name</label>
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
                 <input
                   id="name"
                   type="text"
@@ -916,7 +917,9 @@ const Settings = () => {
               </div>
 
               <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email</label>
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
                 <input
                   id="email"
                   type="email"
@@ -953,7 +956,6 @@ const Settings = () => {
     </div>
   );
 };
-
 
 const Feedback = () => {
   const [messages, setMessages] = useState([]);
@@ -1062,14 +1064,14 @@ const AdminDashboard = () => {
     name: "Loading...",
     email: "Loading...",
   });
- const navigate = useNavigate();
- const [showNotifications, setShowNotifications] = useState(false);
- const [notifications, setNotifications] = useState([]);
- const [unreadCount, setUnreadCount] = useState(0);
+  const navigate = useNavigate();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
- const toggleSidebar = () => {
-   setIsSidebarVisible((prev) => !prev);
- };
+  const toggleSidebar = () => {
+    setIsSidebarVisible((prev) => !prev);
+  };
 
   useEffect(() => {
     const handleResize = () => setScreenWidth(window.innerWidth);
@@ -1141,7 +1143,6 @@ const AdminDashboard = () => {
     setLoggedInUser({ email: "Guest" });
     navigate("/login"); // Redirect to login page after logout
   };
-
 
   // Fetch unread messages count
   useEffect(() => {
@@ -1350,7 +1351,9 @@ const AdminDashboard = () => {
                         const token = localStorage.getItem("token");
                         try {
                           const res = await fetch(
-                            `${import.meta.env.VITE_API_BASE_URL}/api/notifications/mark-read`,
+                            `${
+                              import.meta.env.VITE_API_BASE_URL
+                            }/api/notifications/mark-read`,
                             {
                               method: "PUT",
                               headers: {

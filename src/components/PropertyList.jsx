@@ -11,7 +11,7 @@ const PropertyList = () => {
           `${import.meta.env.VITE_API_BASE_URL}/api/properties`
         );
         const data = await res.json();
-        setProperties(data);
+        setProperties(data); 
       } catch (error) {
         console.error("Failed to fetch properties:", error);
       }
@@ -20,23 +20,20 @@ const PropertyList = () => {
     fetchProperties();
   }, []);
 
-  const visibleProperties = properties.filter(
-    (prop) => prop.paymentStatus !== "paid"
-  );
   return (
     <div className="container mt-5">
       <h2>Available Properties</h2>
       <div className="row">
-        {visibleProperties.map((prop) => (
+        {properties.map((prop) => (
           <div className="col-md-4 mb-4" key={prop._id}>
             <div className="card h-100">
               <div className="card-img-top" style={{ position: "relative" }}>
-                {prop.images.length > 0 ? (
+                {prop.images && prop.images.length > 0 ? (
                   prop.images.map((image, index) => (
                     <img
                       key={index}
-                      src={`${import.meta.env.VITE_API_BASE_URL}${image}`}
-                      alt={`${prop.title} - Image ${index + 1}`}
+                      src={image} 
+                      alt={`${prop.title || "Property"} - Image ${index + 1}`}
                       style={{
                         width: "100%",
                         height: "200px",
@@ -57,6 +54,7 @@ const PropertyList = () => {
                     }}
                   />
                 )}
+
                 <p
                   style={{
                     position: "absolute",

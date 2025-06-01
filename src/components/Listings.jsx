@@ -94,10 +94,8 @@ const Listings = () => {
                 {/* Image section */}
                 {prop.images && prop.images.length > 0 ? (
                   <img
-                    src={`${import.meta.env.VITE_API_BASE_URL}${
-                      prop.images[0]
-                    }`}
-                    alt={`${prop.title} - Image`}
+                    src={prop.images[0]} // Use full Cloudinary URL directly
+                    alt={`${prop.title || "Property"} - Image`}
                     style={{
                       width: "320px",
                       margin: "15px auto 0",
@@ -108,7 +106,7 @@ const Listings = () => {
                   />
                 ) : (
                   <img
-                    src="default-image-path.jpg"
+                    src="/default-image-path.jpg" 
                     alt="No image available"
                     style={{
                       display: "flex",
@@ -136,7 +134,7 @@ const Listings = () => {
                     <strong>Location:</strong> {prop.location}
                   </p>
                   <p>
-                    <strong>Price:</strong> ${prop.price}
+                    <strong>Price:</strong> ${prop.price} ETB
                   </p>
                 </div>
 

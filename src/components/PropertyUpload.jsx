@@ -66,6 +66,16 @@ const PropertyUpload = () => {
       const data = await response.json();
       if (response.status === 201) {
         alert("Property uploaded successfully!");
+
+        // Reset form after successful upload
+        setProperty({
+          title: "",
+          description: "",
+          location: "",
+          price: "",
+          propertyType: "apartment",
+          images: [],
+        });
       } else {
         alert("Failed to upload property: " + data.message);
       }

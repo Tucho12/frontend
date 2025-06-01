@@ -90,7 +90,7 @@ const BookProperty = () => {
       <div className="row">
         <div className="col-md-6">
           <img
-            src={`${import.meta.env.VITE_API_BASE_URL}${property.images[0]}`}
+            src={property.images}
             alt={property.title}
             style={{ width: "100%", height: "300px", objectFit: "cover" }}
           />

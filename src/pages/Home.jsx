@@ -1,5 +1,3 @@
-// src/pages/Home.jsx
-// import React from "react";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
@@ -120,6 +118,21 @@ const handleBookClick = (property) => {
   const toggleNavbar = () => {
     setIsCollapsed(!isCollapsed);
   }
+  const handleNavLinkClick = () => {
+    const navbarToggler = document.querySelector(".navbar-toggler");
+    const navbarCollapse = document.getElementById("navbarNav");
+
+    if (navbarCollapse.classList.contains("show")) {
+      // Collapse manually
+      bootstrap.Collapse.getInstance(navbarCollapse).hide();
+      if (navbarToggler) {
+        navbarToggler.setAttribute("aria-expanded", "false");
+        // Optional: change icon back to ☰
+        const span = navbarToggler.querySelector("span");
+        if (span) span.textContent = "☰";
+      }
+    }
+  };
 
   return (
     <div className="home-container">
@@ -133,7 +146,21 @@ const handleBookClick = (property) => {
                 style={{ height: "40px" }}
               />
             </a>
-
+            {/* Buttons stacked or spaced on mobile, full width container */}
+            <div className="d-flex d-md-none justify-content-between gap-3">
+              <button
+                className="btn btn-outline-primary btn-sm flex-fill"
+                onClick={handleLoginClick}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-primary btn-sm flex-fill"
+                onClick={handleRegisterClick}
+              >
+                Register
+              </button>
+            </div>
             {/* Toggler for small screens */}
             <button
               className="navbar-toggler"
@@ -146,7 +173,6 @@ const handleBookClick = (property) => {
               aria-label="Toggle navigation"
             >
               <span className="text-white fs-4">{isCollapsed ? "✕" : "☰"}</span>
-              {/* <span className="navbar-toggler-icon"></span> */}
             </button>
 
             {/* Centered Nav Links */}
@@ -156,40 +182,64 @@ const handleBookClick = (property) => {
             >
               <ul className="navbar-nav nav-center-links">
                 <li className="nav-item mx-4">
-                  <a className="nav-link" href="#home">
+                  <a
+                    className="nav-link"
+                    href="#home"
+                    onClick={() => handleNavLinkClick()}
+                  >
                     Home
                   </a>
                 </li>
                 <li className="nav-item mx-4">
-                  <a className="nav-link" href="#about">
+                  <a
+                    className="nav-link"
+                    href="#about"
+                    onClick={() => handleNavLinkClick()}
+                  >
                     About
                   </a>
                 </li>
                 <li className="nav-item mx-4">
-                  <a className="nav-link" href="#property">
+                  <a
+                    className="nav-link"
+                    href="#property"
+                    onClick={() => handleNavLinkClick()}
+                  >
                     Property
                   </a>
                 </li>
                 <li className="nav-item mx-4">
-                  <a className="nav-link" href="#testmonials">
+                  <a
+                    className="nav-link"
+                    href="#testmonials"
+                    onClick={() => handleNavLinkClick()}
+                  >
                     Testmonials
                   </a>
                 </li>
                 <li className="nav-item mx-4">
-                  <a className="nav-link" href="#contact">
+                  <a
+                    className="nav-link"
+                    href="#contact"
+                    onClick={() => handleNavLinkClick()}
+                  >
                     Contact
                   </a>
                 </li>
                 <li className="nav-item mx-4">
-                  <a className="nav-link" href="#help">
+                  <a
+                    className="nav-link"
+                    href="#help"
+                    onClick={() => handleNavLinkClick()}
+                  >
                     Help
                   </a>
                 </li>
               </ul>
             </div>
 
-            {/* Right-side buttons */}
-            <div className="d-flex gap-2">
+            {/* Buttons aligned left/right on small screens */}
+            <div className="d-none d-md-flex gap-3 ms-auto">
               <button
                 className="btn btn-outline-primary btn-sm"
                 onClick={handleLoginClick}
@@ -207,53 +257,36 @@ const handleBookClick = (property) => {
         </nav>
       </div>
 
-      <div className="content-container text-center">
-        <div className="home-title">
-          <h2 id="home" className="display-5 fw-bold">
-            Welcome to the House Rentals Management System
-          </h2>
+      <div className="content-container">
+        <div className="home-title text-center">
+          <h2>Welcome to the House Rentals Management System</h2>
           <p className="lead">
             Your trusted platform for hassle-free property rentals. Explore
             listings, make bookings, and manage everything in one place.
           </p>
-          <div
-            className="d-grid gap-2 d-md-block mt-1"
-            style={{
-              position: "relative",
-              display: "inline-block",
-            }}
-          >
+
+          <div className="position-relative d-inline-block mt-4">
             <img
               src="https://media.istockphoto.com/id/961081044/photo/house-key-in-real-estate-sale-person-or-home-insurance-broker-agents-hand-giving-to-buyer.jpg?s=1024x1024&w=is&k=20&c=r7NhpM7Z9PY3wywhAKeBCiudAG_qWUBamf773rdml7M="
               alt="Welcome Banner"
-              className="img-fluid mb-3"
-              style={{
-                maxWidth: "450px",
-                borderRadius: "12px",
-              }}
+              className="img-fluid rounded-3"
+              style={{ maxWidth: "100%", height: "auto", maxHeight: "400px" }}
             />
-            <span
-              style={{
-                position: "absolute",
-                top: "80%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                padding: "10px",
-                borderRadius: "10px",
-                textAlign: "center",
-              }}
+
+            <div
+              className="position-absolute start-50 translate-middle-x text-center w-100 px-3"
+              style={{ bottom: "15px" }}
             >
-              <p className="lead text-center text-primary fw-bold">
+              <p className="lead text-primary fw-bold mb-2">
                 Access your account.
               </p>
-
               <button
                 className="btn btn-outline-primary btn-sm"
                 onClick={handleRegisterClick}
               >
                 Get Started
               </button>
-            </span>
+            </div>
           </div>
         </div>
       </div>
@@ -379,7 +412,7 @@ const handleBookClick = (property) => {
                   prop.images.map((image, index) => (
                     <img
                       key={index}
-                      src={`${import.meta.env.VITE_API_BASE_URL}${image}`}
+                      src={image}
                       alt={`${prop.title} - Image ${index + 1}`}
                       style={{
                         width: "100%",

@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
-const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("light");
 
-useEffect(() => {
-  document.body.className = theme; // Apply class to body
-}, [theme]);
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
-const toggleTheme = () => {
-  setTheme((prev) => (prev === "light" ? "dark" : "light"));
-};
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   const [properties, setProperties] = useState([]);
 
@@ -43,7 +43,6 @@ const toggleTheme = () => {
   const [visibleCount, setVisibleCount] = useState(6);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-
   useEffect(() => {
     let landlordTarget = 15;
     let tenantTarget = 25;
@@ -70,54 +69,54 @@ const toggleTheme = () => {
     };
   }, []);
 
- const [formData, setFormData] = useState({
-   name: "",
-   email: "",
-   message: "",
- });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
- const handleChange = (e) => {
-   setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
- };
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
 
- const handleSubmit = async (e) => {
-   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-   try {
-     const res = await fetch(
-       `${import.meta.env.VITE_API_BASE_URL}/api/contact`,
-       {
-         method: "POST",
-         headers: { "Content-Type": "application/json" },
-         body: JSON.stringify(formData),
-       }
-     );
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/contact`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
 
-     if (!res.ok) throw new Error("Failed to send message");
+      if (!res.ok) throw new Error("Failed to send message");
 
-     alert("Message sent successfully!");
-     setFormData({ name: "", email: "", message: "" });
-   } catch (err) {
-     console.error("Error sending message:", err);
-     alert("Something went wrong.");
-   }
- };
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error("Error sending message:", err);
+      alert("Something went wrong.");
+    }
+  };
 
-const handleBookClick = (property) => {
-  const isLoggedInAsTenant = localStorage.getItem("userRole") === "tenant"; 
-  if (!isLoggedInAsTenant) {
-    alert("Please log in as a tenant to book this property.");
-    window.location.href = "/login";
-  } else {
-    // Proceed with booking logic for the tenant
-    console.log("Booking property:", property);
-    // Add further logic for booking the property
-  }
-};
+  const handleBookClick = (property) => {
+    const isLoggedInAsTenant = localStorage.getItem("userRole") === "tenant";
+    if (!isLoggedInAsTenant) {
+      alert("Please log in as a tenant to book this property.");
+      window.location.href = "/login";
+    } else {
+      // Proceed with booking logic for the tenant
+      console.log("Booking property:", property);
+      // Add further logic for booking the property
+    }
+  };
 
   const toggleNavbar = () => {
     setIsCollapsed(!isCollapsed);
-  }
+  };
   const handleNavLinkClick = () => {
     const navbarToggler = document.querySelector(".navbar-toggler");
     const navbarCollapse = document.getElementById("navbarNav");
@@ -258,7 +257,7 @@ const handleBookClick = (property) => {
       </div>
 
       <div className="content-container">
-        <div className="home-title text-center">
+        <div id="home" className="home-title text-center">
           <h2>Welcome to the House Rentals Management System</h2>
           <p className="lead">
             Your trusted platform for hassle-free property rentals. Explore

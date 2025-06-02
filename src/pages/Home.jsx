@@ -465,11 +465,17 @@ const Home = () => {
                 <h5 style={{ color: "blue" }}>{prop.title}</h5>
                 <p className="card-text">{prop.description}</p>
 
-                <p
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                    prop.location
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   style={{
                     color: "#2c3e50",
                     display: "flex",
                     alignItems: "center",
+                    textDecoration: "none",
                   }}
                 >
                   <i
@@ -477,7 +483,7 @@ const Home = () => {
                     style={{ marginRight: "8px", color: "#007bff" }}
                   ></i>
                   {prop.location}
-                </p>
+                </a>
               </div>
             </div>
           </div>

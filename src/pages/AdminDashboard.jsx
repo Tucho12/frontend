@@ -352,34 +352,14 @@ const PropertyManagement = () => {
     const fetchProperties = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/properties`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/admin/properties`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-
-        const propertiesWithLandlord = await Promise.all(
-          response.data.map(async (property) => {
-            if (typeof property.landlord === "object") {
-              return { ...property, landlordData: property.landlord };
-            }
-            const landlordResponse = await axios.get(
-              `${import.meta.env.VITE_API_BASE_URL}/api/auth/user/${
-                property.landlord
-              }`,
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            );
-            return { ...property, landlordData: landlordResponse.data };
-          })
-        );
-
-        setProperties(propertiesWithLandlord);
+        setProperties(response.data);
       } catch (error) {
         console.error("Error fetching properties:", error);
       } finally {
@@ -389,6 +369,7 @@ const PropertyManagement = () => {
 
     fetchProperties();
   }, []);
+  
 
   const handleApprove = async (propertyId) => {
     try {

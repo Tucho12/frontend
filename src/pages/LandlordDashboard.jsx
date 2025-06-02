@@ -30,8 +30,8 @@ const LandlordDashboard = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [showMessages, setShowMessages] = useState(false); // State to toggle message panel
-  const [messages, setMessages] = useState([]); // To store the messages
+  const [showMessages, setShowMessages] = useState(false); 
+  const [messages, setMessages] = useState([]); 
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const [unreadMessageCount, setUnreadMessageCount] = useState(0);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -121,9 +121,7 @@ const LandlordDashboard = () => {
       if (response.ok) {
         const data = await response.json();
 
-        const userId = loggedInUser._id; // Current landlord ID
-
-        // Filter messages where landlord is either sender or receiver
+        const userId = loggedInUser._id; 
         const landlordMessages = data.filter(
           (msg) => msg.receiver._id === userId || msg.sender._id === userId
         );
@@ -151,7 +149,6 @@ const LandlordDashboard = () => {
     }
   };
 
-  // Fetch messages
   useEffect(() => {
     if (loggedInUser && loggedInUser._id) {
       fetchMessages();
@@ -182,8 +179,17 @@ const LandlordDashboard = () => {
       const userId = loggedInUser._id;
 
       // ✅ Correct way to get last message
-      const lastMessage = messages[selectedTenantId]?.slice(-1)[0];
-      const propertyId = lastMessage?.property?._id;
+      const lastMessage =
+        messages[selectedTenantId]?.length > 0
+          ? messages[selectedTenantId][messages[selectedTenantId].length - 1]
+          : null;
+
+      if (!lastMessage || !lastMessage.property) {
+        alert("No property associated with this tenant.");
+        return;
+      }
+
+      const propertyId = lastMessage.property._id;
 
       if (!userId || !propertyId) {
         console.error("Missing required fields for sending reply");

@@ -109,6 +109,15 @@ function App() {
         </main>
         {/* 🧁 Toast Container for Notifications */}
         <ToastContainer position="top-right" autoClose={5000} />
+        <div className="telegram-bot">
+          <a
+            href="https://t.me/house_rental_system_bot"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fab fa-telegram fa-3x"></i>
+          </a>
+        </div>
       </div>
     </Router>
   );

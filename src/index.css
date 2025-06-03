@@ -611,3 +611,50 @@ html, body {
     font-size: 15px;
   }
 }
+
+.telegram-bot {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background-color: transparent;
+  border-radius: 50%;
+  padding: 15px;
+  box-shadow: none;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.telegram-bot a {
+  color: #0088cc;
+  text-decoration: none;
+}
+
+.telegram-bot i {
+  animation: bounce 2s infinite;
+  transition: color 0.3s;
+}
+
+.telegram-bot:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 136, 204, 0.5); /* very light blue glow */
+}
+
+.telegram-bot:hover i {
+  color: #33aadd;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  70% {
+    transform: translateY(-7px);
+  }
+}

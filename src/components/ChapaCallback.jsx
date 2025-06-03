@@ -20,7 +20,7 @@ const ChapaCallback = () => {
     const params = new URLSearchParams(location.search);
     const tx_ref = params.get("tx_ref");
 
-    console.log("Verifying payment with tx_ref:", tx_ref); // Log tx_ref
+    console.log("Verifying payment with tx_ref:", tx_ref); 
 
     if (!tx_ref) {
       setError("Missing transaction reference.");

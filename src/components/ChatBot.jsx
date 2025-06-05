@@ -46,7 +46,7 @@ const ChatBot = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/chatbot", {
+      const res = await fetch("https://backend-9a4x.onrender.com/api/chatbot", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input }),

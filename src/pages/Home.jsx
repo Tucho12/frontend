@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-
 const Home = () => {
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");

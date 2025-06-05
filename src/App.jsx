@@ -20,6 +20,7 @@ import PropertyList from "./components/PropertyList";
 import socket from "./socket";
 import Messages from "../src/components/Messages"
 import ChapaCallback from "./components/ChapaCallback";
+import ChatBot from "./components/ChatBot";
 
 function App() {
   const [userRole, setUserRole] = useState(null);
@@ -105,20 +106,27 @@ function App() {
               element={<Messages />}
             />
             <Route path="/chapa/callback" element={<ChapaCallback />} />
+            <Route
+              path="/chatbot"
+              element={
+                isAuthenticated() ? <ChatBot /> : <Navigate to="/login" />
+              }
+            />
           </Routes>
         </main>
         {/* 🧁 Toast Container for Notifications */}
         <ToastContainer position="top-right" autoClose={5000} />
-        <div className="telegram-bot">
-          <a
-            href="https://t.me/house_rental_system_bot"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className="fab fa-telegram fa-3x"></i>
-          </a>
+          <ChatBot />
+          <div className="telegram-bot">
+            <a
+              href="https://t.me/house_rental_system_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fab fa-telegram fa-3x"></i>
+            </a>
+          </div>
         </div>
-      </div>
     </Router>
   );
 }

@@ -612,6 +612,9 @@ html, body {
   }
 }
 
+
+
+
 .telegram-bot {
   position: fixed;
   bottom: 20px;
@@ -635,20 +638,30 @@ html, body {
   border: solid 2px rgba(0, 136, 204, 0.1);;
   background-color: rgba(0, 136, 204, 0.3);
 }
+.chatbot-toggle{
+  animation: bounce 2s infinite;
+  transition: color 0.3s;
+  border-radius: 50%;
+  padding: 5px;
+  border: solid 2px rgba(0, 136, 204, 0.1);;
+  background-color: rgba(0, 136, 204, 0.3);
+}
+.chatbot-toggle:hover{
+  color: #33aadd;
+  background-color: rgba(0, 136, 204, 0.5);
+}
 .telegram-bot i:hover {
   color: #33aadd;
   background-color: rgba(0, 136, 204, 0.5);
 }
 .telegram-bot:hover {
   transform: scale(1.1);
-  /* background-color: rgba(0, 136, 204, 0.5);  */
 }
 
 .telegram-bot:hover i {
   color: #33aadd;
 }
 
-/* Bounce animation */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -663,16 +676,20 @@ html, body {
     transform: translateY(-7px);
   }
 }
-/* Responsive styles for the Telegram bot icon */
 @media (max-width: 600px) {
   .telegram-bot {
     bottom: 10px;
     right: 10px;
   }
   
+  
   .telegram-bot i {
     font-size: 24px;
     padding: 3px;
+  }
+  .chatbot-container {
+    bottom: 10px;
+    right: 10px;
   }
 }
 @media (max-width: 400px) {
@@ -685,6 +702,10 @@ html, body {
     bottom: 5px;
     right: 5px;
   }
+  .chatbot-container {
+    bottom: 10px;
+    right: 10px;
+  }
 }
 @media (max-width: 768px) {
   .telegram-bot {
@@ -696,4 +717,8 @@ html, body {
     font-size: 40px;
     padding: 5px;
   }
-}
+  .chatbot-container {
+    bottom: 10px;
+    right: 10px;
+  }
+} 

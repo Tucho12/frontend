@@ -116,7 +116,7 @@ const ChatBot = () => {
             display: "flex",
             flexDirection: "column",
             height: 400,
-            width:300,
+            width:290,
           }}
         >
           <div

@@ -689,7 +689,7 @@ html, body {
   }
   .chatbot-container {
     bottom: 10px;
-    right: 10px;
+    left: 10px;
   }
 }
 @media (max-width: 400px) {
@@ -699,12 +699,12 @@ html, body {
   }
   
   .telegram-bot {
-    bottom: 5px;
-    right: 5px;
+    bottom: 35px;
+    right: 10px;
   }
   .chatbot-container {
     bottom: 10px;
-    right: 10px;
+    left: 10px;
   }
 }
 @media (max-width: 768px) {

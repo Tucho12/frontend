@@ -76,7 +76,7 @@ const ChatBot = () => {
       style={{
         position: "fixed",
         bottom: 20,
-        left: 10,
+        left: 5,
         width: 320,
         zIndex: 1000,
       }}
@@ -116,7 +116,7 @@ const ChatBot = () => {
             display: "flex",
             flexDirection: "column",
             height: 400,
-            width:300,
+            width:250,
           }}
         >
           <div

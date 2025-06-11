@@ -84,6 +84,16 @@ const BookProperty = () => {
 
   if (!property) return <p>{errorMessage || "Loading property details..."}</p>;
 
+
+  const amenityLabelMap = {
+    washerDryer: "In-Unit Washer & Dryer 🧺",
+    heatingCooling: "Central Heating & Cooling ❄️🔥",
+    secureBuilding: "Secure Building with Elevator Access 🛗",
+    parking: "1 Reserved Parking Spot 🚗",
+    gymPool: "Access to Gym & Pool 🏋️‍♀️🏊",
+    nearShopsTransit: "Close to Shopping, Transit, and Restaurants 🛍️🚉🍴",
+  };
+  
   return (
     <div className="container mt-5">
       <h2>Book Property: {property.title}</h2>
@@ -150,14 +160,16 @@ const BookProperty = () => {
           <p>
             <strong>Description:</strong> {property.description}
             <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-              {property.bedrooms && <li>✔️ {property.bedrooms} Bedrooms</li>}
+              {property.bedrooms && <li>🛏️ {property.bedrooms} Bedrooms</li>}
               {property.bathrooms && (
-                <li>✔️ {property.bathrooms} Full Bathrooms</li>
+                <li>🛁 {property.bathrooms} Full Bathrooms</li>
               )}
-              {Array.isArray(property.amenities) &&
-                property.amenities.map((item, index) => (
-                  <li key={index}>✔️ {item}</li>
-                ))}
+              {property.amenities &&
+                Object.entries(property.amenities)
+                  .filter(([_, value]) => value)
+                  .map(([key], index) => (
+                    <li key={index}>✅ {amenityLabelMap[key] || key}</li>
+                  ))}
             </ul>
             <p className="mt-3">
               Perfect for professionals, families, or anyone looking for comfort

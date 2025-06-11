@@ -183,7 +183,7 @@ const PropertyUpload = () => {
             <option value="house">House</option>
             <option value="office">Office</option>
             <option value="condo">Condo</option>
-            <option value="studio">Office</option>
+            <option value="studio">Studio</option>
             <option value="other">Other</option>
           </select>
         </div>

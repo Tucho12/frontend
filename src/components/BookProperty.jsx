@@ -149,6 +149,20 @@ const BookProperty = () => {
           </p>
           <p>
             <strong>Description:</strong> {property.description}
+            <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+              {property.bedrooms && <li>✔️ {property.bedrooms} Bedrooms</li>}
+              {property.bathrooms && (
+                <li>✔️ {property.bathrooms} Full Bathrooms</li>
+              )}
+              {Array.isArray(property.amenities) &&
+                property.amenities.map((item, index) => (
+                  <li key={index}>✔️ {item}</li>
+                ))}
+            </ul>
+            <p className="mt-3">
+              Perfect for professionals, families, or anyone looking for comfort
+              and convenience. Schedule a viewing today!
+            </p>
           </p>
           <p>
             <strong>Price:</strong> ${property.price} per month

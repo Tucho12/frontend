@@ -7,7 +7,17 @@ const PropertyUpload = () => {
     location: "",
     price: "",
     propertyType: "apartment",
-    images: [], 
+    bedrooms: "",
+    bathrooms: "",
+    amenities: {
+      washerDryer: false,
+      heatingCooling: false,
+      secureBuilding: false,
+      parking: false,
+      gymPool: false,
+      nearShopsTransit: false,
+    },
+    images: [],
   });
 
   const handleChange = (e) => {
@@ -18,8 +28,18 @@ const PropertyUpload = () => {
     }));
   };
 
+  const handleAmenityChange = (e) => {
+    const { name, checked } = e.target;
+    setProperty((prevData) => ({
+      ...prevData,
+      amenities: {
+        ...prevData.amenities,
+        [name]: checked,
+      },
+    }));
+  };
   const handleImageChange = (e) => {
-    const files = Array.from(e.target.files); // Convert FileList to array
+    const files = Array.from(e.target.files); 
     console.log("Selected files:", files);
     setProperty((prevData) => ({
       ...prevData,
@@ -43,6 +63,12 @@ const PropertyUpload = () => {
     formData.append("location", property.location);
     formData.append("price", property.price);
     formData.append("propertyType", property.propertyType);
+    formData.append("bedrooms", property.bedrooms);
+    formData.append("bathrooms", property.bathrooms);
+
+    Object.entries(property.amenities).forEach(([key, value]) => {
+      formData.append(`amenities[${key}]`, value);
+    });
 
     // Append multiple images
     if (property.images.length > 0) {
@@ -149,6 +175,101 @@ const PropertyUpload = () => {
             <option value="other">Other</option>
           </select>
         </div>
+
+        <div className="mb-3">
+          <label className="form-label">Bedrooms</label>
+          <input
+            type="number"
+            className="form-control"
+            name="bedrooms"
+            value={property.bedrooms}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Bathrooms</label>
+          <input
+            type="number"
+            className="form-control"
+            name="bathrooms"
+            value={property.bathrooms}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label">Amenities</label>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="washerDryer"
+              checked={property.amenities.washerDryer}
+              onChange={handleAmenityChange}
+            />
+            <label className="form-check-label">In-Unit Washer & Dryer</label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="heatingCooling"
+              checked={property.amenities.heatingCooling}
+              onChange={handleAmenityChange}
+            />
+            <label className="form-check-label">
+              Central Heating & Cooling
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="secureBuilding"
+              checked={property.amenities.secureBuilding}
+              onChange={handleAmenityChange}
+            />
+            <label className="form-check-label">
+              Secure Building with Elevator Access
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="parking"
+              checked={property.amenities.parking}
+              onChange={handleAmenityChange}
+            />
+            <label className="form-check-label">1 Reserved Parking Spot</label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="gymPool"
+              checked={property.amenities.gymPool}
+              onChange={handleAmenityChange}
+            />
+            <label className="form-check-label">Access to Gym & Pool</label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              name="nearShopsTransit"
+              checked={property.amenities.nearShopsTransit}
+              onChange={handleAmenityChange}
+            />
+            <label className="form-check-label">
+              Close to Shopping, Transit, and Restaurants
+            </label>
+          </div>
+        </div>
+
         <div className="mb-3">
           <label className="form-label">Images</label>
           <input

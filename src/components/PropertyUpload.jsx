@@ -100,6 +100,16 @@ const PropertyUpload = () => {
           location: "",
           price: "",
           propertyType: "apartment",
+          bedrooms: "",
+          bathrooms: "",
+          amenities: {
+            washerDryer: false,
+            heatingCooling: false,
+            secureBuilding: false,
+            parking: false,
+            gymPool: false,
+            nearShopsTransit: false,
+          },
           images: [],
         });
       } else {

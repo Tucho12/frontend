@@ -144,6 +144,9 @@ const PropertyUpload = () => {
             <option value="apartment">Apartment</option>
             <option value="house">House</option>
             <option value="office">Office</option>
+            <option value="condo">Condo</option>
+            <option value="studio">Office</option>
+            <option value="other">Other</option>
           </select>
         </div>
         <div className="mb-3">

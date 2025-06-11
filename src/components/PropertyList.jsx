@@ -32,7 +32,7 @@ const PropertyList = () => {
                   prop.images.map((image, index) => (
                     <img
                       key={index}
-                      src={image} 
+                      src={image}
                       alt={`${prop.title || "Property"} - Image ${index + 1}`}
                       style={{
                         width: "100%",
@@ -79,12 +79,15 @@ const PropertyList = () => {
                     transition: "background-color 0.3s",
                   }}
                 >
-                  Book
+                  View details
                 </Link>
               </div>
               <div className="card-body">
+                <h4 style={{ color: "green", fontWeight: "bold" }}>
+                  {prop.propertyType}
+                </h4>
                 <h5 style={{ color: "blue" }}>{prop.title}</h5>
-                <p className="card-text">{prop.description}</p>
+                {/* <p className="card-text">{prop.description}</p> */}
 
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(

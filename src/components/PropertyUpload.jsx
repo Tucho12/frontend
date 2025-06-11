@@ -17,6 +17,8 @@ const PropertyUpload = () => {
       gymPool: false,
       nearShopsTransit: false,
     },
+    features: [],
+    featureInput: "",
     images: [],
   });
 
@@ -92,8 +94,6 @@ const PropertyUpload = () => {
       const data = await response.json();
       if (response.status === 201) {
         alert("Property uploaded successfully!");
-
-        // Reset form after successful upload
         setProperty({
           title: "",
           description: "",
@@ -110,6 +110,8 @@ const PropertyUpload = () => {
             gymPool: false,
             nearShopsTransit: false,
           },
+          features: [],
+          featureInput: "",
           images: [],
         });
       } else {

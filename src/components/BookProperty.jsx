@@ -206,7 +206,7 @@ const BookProperty = () => {
               />
             </div>
             {errorMessage && <p className="text-danger">{errorMessage}</p>}
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary mb-5">
               Book Now
             </button>
           </form>

@@ -29,19 +29,16 @@ const PropertyList = () => {
             <div className="card h-100">
               <div className="card-img-top" style={{ position: "relative" }}>
                 {prop.images && prop.images.length > 0 ? (
-                  prop.images.map((image, index) => (
-                    <img
-                      key={index}
-                      src={image}
-                      alt={`${prop.title || "Property"} - Image ${index + 1}`}
-                      style={{
-                        width: "100%",
-                        height: "200px",
-                        objectFit: "cover",
-                        borderRadius: "12px",
-                      }}
-                    />
-                  ))
+                  <img
+                    src={prop.images[0]}
+                    alt={`${prop.title || "Property"} - Cover Image`}
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      objectFit: "cover",
+                      borderRadius: "12px",
+                    }}
+                  />
                 ) : (
                   <img
                     src="/placeholder.jpg"

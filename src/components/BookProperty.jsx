@@ -89,11 +89,59 @@ const BookProperty = () => {
       <h2>Book Property: {property.title}</h2>
       <div className="row">
         <div className="col-md-6">
-          <img
-            src={property.images}
-            alt={property.title}
-            style={{ width: "100%", height: "300px", objectFit: "cover" }}
-          />
+          {Array.isArray(property.images) && property.images.length > 0 ? (
+            <div
+              id="propertyImagesCarousel"
+              className="carousel slide mb-3"
+              data-bs-ride="carousel"
+            >
+              <div className="carousel-inner">
+                {property.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`carousel-item ${index === 0 ? "active" : ""}`}
+                  >
+                    <img
+                      src={image}
+                      className="d-block w-100"
+                      alt={`Slide ${index}`}
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  </div>
+                ))}
+              </div>
+              {property.images.length > 1 && (
+                <>
+                  <button
+                    className="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#propertyImagesCarousel"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      className="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    className="carousel-control-next"
+                    type="button"
+                    data-bs-target="#propertyImagesCarousel"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      className="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span className="visually-hidden">Next</span>
+                  </button>
+                </>
+              )}
+            </div>
+          ) : (
+            <p>No images available.</p>
+          )}
         </div>
         <div className="col-md-6">
           <p>

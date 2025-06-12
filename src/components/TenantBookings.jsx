@@ -234,6 +234,34 @@ const TenantBookings = ({ user }) => {
     }
   };
   
+  const deleteBooking = async (bookingId) => {
+    if (!window.confirm("Are you sure you want to cancel this booking?"))
+      return;
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/bookings/${bookingId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Remove the deleted booking from state
+        setBookings((prev) => prev.filter((b) => b._id !== bookingId));
+      } else {
+        throw new Error("Failed to delete the booking.");
+      }
+    } catch (error) {
+      console.error("Error deleting booking:", error);
+      const message = error.response?.data?.message || error.message;
+      alert(`Failed to cancel booking: ${message}`);
+    }
+  };
   
   
 

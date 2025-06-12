@@ -257,9 +257,8 @@ const TenantBookings = ({ user }) => {
                   booking.property.images.length > 0 ? (
                     booking.property.images.map((image, index) => (
                       <img
-                        key={index}
-                        src={image} // ✅ use image here, which is defined in map
-                        alt={`${booking.property.title} - Image ${index + 1}`}
+                        src={booking.property.images[0]} 
+                        alt={`${booking.property.title} - Image 1`}
                         className="img-fluid mb-2 rounded"
                         style={{
                           width: "100%",

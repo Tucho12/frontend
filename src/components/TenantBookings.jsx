@@ -251,23 +251,21 @@ const TenantBookings = ({ user }) => {
           {bookings.map((booking) => (
             <div className="col-md-4 mb-4" key={booking._id}>
               <div className="card p-3">
-                {/* Property Images */}
-                <div className="d-flex flex-wrap justify-content-center">
+                {/* Property Image */}
+                <div className="d-flex justify-content-center">
                   {booking.property.images &&
                   booking.property.images.length > 0 ? (
-                    booking.property.images.map((image, index) => (
-                      <img
-                        src={booking.property.images[0]} 
-                        alt={`${booking.property.title} - Image 1`}
-                        className="img-fluid mb-2 rounded"
-                        style={{
-                          width: "100%",
-                          maxWidth: "100%",
-                          height: "auto",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ))
+                    <img
+                      src={booking.property.images[0]} // Show only the first image
+                      alt={`${booking.property.title} - Image 1`}
+                      className="img-fluid mb-2 rounded"
+                      style={{
+                        width: "100%",
+                        maxWidth: "100%",
+                        height: "auto",
+                        objectFit: "cover",
+                      }}
+                    />
                   ) : (
                     <p>No images available for this property.</p>
                   )}
@@ -302,9 +300,10 @@ const TenantBookings = ({ user }) => {
                     {booking.status}
                   </span>
                   {booking.paymentStatus === "paid" && (
-                    <span className="text-success">✅ Paid</span>
+                    <span className="text-success ms-2">✅ Paid</span>
                   )}
                 </p>
+
                 {booking.status === "confirmed" && (
                   <div className="d-flex justify-content-between">
                     <button

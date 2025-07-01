@@ -7,10 +7,10 @@ const TenantBookings = ({ user }) => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [chatOpen, setChatOpen] = useState(false); 
-  const [selectedBooking, setSelectedBooking] = useState(null); 
-  const [messagesByProperty, setMessagesByProperty] = useState({}); 
-  const [newMessage, setNewMessage] = useState(""); 
+  const [chatOpen, setChatOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [messagesByProperty, setMessagesByProperty] = useState({});
+  const [newMessage, setNewMessage] = useState("");
 
   // Fetch tenant's bookings
   useEffect(() => {
@@ -99,14 +99,13 @@ const TenantBookings = ({ user }) => {
       const token = localStorage.getItem("token");
       const decodedToken = jwtDecode(token); // Decode the token to get user ID
       const userId = decodedToken.id;
-      const propertyId = selectedBooking.property._id; 
+      const propertyId = selectedBooking.property._id;
       const messageData = {
-        sender: userId, 
+        sender: userId,
         receiver: selectedBooking.property.landlord._id, // Landlord ID
         property: selectedBooking.property._id, // Full property object (not just ID)
         content: newMessage, // The message content
       };
-      
 
       // Send the message data via an API request
       const response = await axios.post(
@@ -181,8 +180,6 @@ const TenantBookings = ({ user }) => {
         return;
       }
 
-
-      
       const start = new Date(booking.startDate);
       const end = new Date(booking.endDate);
       const months =
@@ -193,7 +190,6 @@ const TenantBookings = ({ user }) => {
 
       const totalAmount = booking.property.price * months;
 
-      
       alert(
         `Your total payment amount is ${totalAmount} ETB for ${months} month(s).`
       );
@@ -233,7 +229,7 @@ const TenantBookings = ({ user }) => {
       alert(`Error initiating payment: ${message}`);
     }
   };
-  
+
   const deleteBooking = async (bookingId) => {
     if (!window.confirm("Are you sure you want to cancel this booking?"))
       return;
@@ -262,8 +258,6 @@ const TenantBookings = ({ user }) => {
       alert(`Failed to cancel booking: ${message}`);
     }
   };
-  
-  
 
   return (
     <div className="container mt-4">

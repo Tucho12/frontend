@@ -5,6 +5,8 @@ import { FaArrowLeft } from "react-icons/fa";
 
 const Login = ({ setUserRole }) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -25,6 +27,8 @@ const Login = ({ setUserRole }) => {
       alert("Please enter both email and password.");
       return;
     }
+
+    setLoading(true); 
 
     try {
       const response = await fetch(
@@ -49,7 +53,7 @@ const Login = ({ setUserRole }) => {
           return;
         }
 
-        setUserRole(userRole); // Update App state
+        setUserRole(userRole);
         navigate(`/${userRole}`);
       } else {
         alert(data.message || "Login failed. Please check your credentials.");
@@ -57,6 +61,8 @@ const Login = ({ setUserRole }) => {
     } catch (err) {
       console.error(err);
       alert("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -99,8 +105,23 @@ const Login = ({ setUserRole }) => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 mt-3">
-            Login
+          <button
+            type="submit"
+            className="btn btn-primary w-100 mt-3"
+            disabled={loading}
+          >
+            {loading ? (
+              <>
+                <span
+                  className="spinner-border spinner-border-sm me-2"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                Logging in...
+              </>
+            ) : (
+              "Login"
+            )}
           </button>
         </form>
 

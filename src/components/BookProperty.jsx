@@ -8,6 +8,8 @@ const BookProperty = () => {
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchPropertyDetails = async () => {
@@ -42,19 +44,19 @@ const BookProperty = () => {
   const handleBooking = async (e) => {
     e.preventDefault();
 
-    // Validate input fields
     if (!checkInDate || !checkOutDate) {
       setErrorMessage("Both check-in and check-out dates are required.");
       return;
     }
 
-    // Ensure check-out date is after check-in date
     const checkIn = new Date(checkInDate);
     const checkOut = new Date(checkOutDate);
     if (checkOut <= checkIn) {
       setErrorMessage("Check-out date must be after check-in date.");
       return;
     }
+
+    setLoading(true); 
 
     try {
       const token = localStorage.getItem("token");
@@ -79,8 +81,11 @@ const BookProperty = () => {
       }
     } catch (error) {
       setErrorMessage("An error occurred while making the booking.");
+    } finally {
+      setLoading(false); 
     }
   };
+
 
   if (!property) return <p>{errorMessage || "Loading property details..."}</p>;
 
@@ -210,8 +215,20 @@ const BookProperty = () => {
               style={{ marginBottom: "4rem" }}
               type="submit"
               className="btn btn-primary"
+              disabled={loading}
             >
-              Book Now
+              {loading ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Booking...
+                </>
+              ) : (
+                "Book Now"
+              )}
             </button>
           </form>
         </div>

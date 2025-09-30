@@ -41,6 +41,8 @@ const Home = () => {
   const [tenantDisplayCount, setTenantDisplayCount] = useState(0);
   const [visibleCount, setVisibleCount] = useState(6);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     let landlordTarget = 15;
@@ -80,6 +82,7 @@ const Home = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); 
 
     try {
       const res = await fetch(
@@ -98,8 +101,11 @@ const Home = () => {
     } catch (err) {
       console.error("Error sending message:", err);
       alert("Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
+
 
   const handleBookClick = (property) => {
     const isLoggedInAsTenant = localStorage.getItem("userRole") === "tenant";
@@ -257,7 +263,7 @@ const Home = () => {
 
       <div className="content-container">
         <div id="home" className="home-title text-center">
-          <h2>Welcome to the House Rentals Management System</h2>
+          <h2>Welcome to the House Rental Management System</h2>
           <p className="lead">
             Your trusted platform for hassle-free property rentals. Explore
             listings, make bookings, and manage everything in one place.
@@ -620,8 +626,23 @@ const Home = () => {
                     required
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-outline-primary">
-                  Send Message
+                <button
+                  type="submit"
+                  className="btn btn-outline-primary"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </button>
               </form>
             </div>

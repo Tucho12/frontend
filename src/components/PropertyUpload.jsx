@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const PropertyUpload = () => {
+
   const [property, setProperty] = useState({
     title: "",
     description: "",
@@ -21,6 +22,7 @@ const PropertyUpload = () => {
     featureInput: "",
     images: [],
   });
+const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,79 +51,81 @@ const PropertyUpload = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
-    const token = localStorage.getItem("token");
+   const token = localStorage.getItem("token");
 
-    if (!token) {
-      alert("You must be logged in to upload a property.");
-      return;
-    }
+   if (!token) {
+     alert("You must be logged in to upload a property.");
+     return;
+   }
 
-    const formData = new FormData();
-    formData.append("title", property.title);
-    formData.append("description", property.description);
-    formData.append("location", property.location);
-    formData.append("price", property.price);
-    formData.append("propertyType", property.propertyType);
-    formData.append("bedrooms", property.bedrooms);
-    formData.append("bathrooms", property.bathrooms);
+   const formData = new FormData();
+   formData.append("title", property.title);
+   formData.append("description", property.description);
+   formData.append("location", property.location);
+   formData.append("price", property.price);
+   formData.append("propertyType", property.propertyType);
+   formData.append("bedrooms", property.bedrooms);
+   formData.append("bathrooms", property.bathrooms);
 
-    Object.entries(property.amenities).forEach(([key, value]) => {
-      formData.append(`amenities[${key}]`, value);
-    });
+   Object.entries(property.amenities).forEach(([key, value]) => {
+     formData.append(`amenities[${key}]`, value);
+   });
 
-    // Append multiple images
-    if (property.images.length > 0) {
-      property.images.forEach((image, index) => {
-        formData.append(`images`, image);
-      });
-    }
+   if (property.images.length > 0) {
+     property.images.forEach((image) => {
+       formData.append(`images`, image);
+     });
+   }
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/properties`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        }
-      );
+   setLoading(true); // 🔹 start spinner
 
-      const data = await response.json();
-      if (response.status === 201) {
-        alert("Property uploaded successfully!");
-        setProperty({
-          title: "",
-          description: "",
-          location: "",
-          price: "",
-          propertyType: "apartment",
-          bedrooms: "",
-          bathrooms: "",
-          amenities: {
-            washerDryer: false,
-            heatingCooling: false,
-            secureBuilding: false,
-            parking: false,
-            gymPool: false,
-            nearShopsTransit: false,
-          },
-          features: [],
-          featureInput: "",
-          images: [],
-        });
-      } else {
-        alert("Failed to upload property: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error uploading property:", error);
-      alert("An error occurred while uploading the property: " + error.message);
-    }
-  };
+   try {
+     const response = await fetch(
+       `${import.meta.env.VITE_API_BASE_URL}/api/properties`,
+       {
+         method: "POST",
+         headers: { Authorization: `Bearer ${token}` },
+         body: formData,
+       }
+     );
+
+     const data = await response.json();
+     if (response.status === 201) {
+       alert("Property uploaded successfully!");
+       setProperty({
+         title: "",
+         description: "",
+         location: "",
+         price: "",
+         propertyType: "apartment",
+         bedrooms: "",
+         bathrooms: "",
+         amenities: {
+           washerDryer: false,
+           heatingCooling: false,
+           secureBuilding: false,
+           parking: false,
+           gymPool: false,
+           nearShopsTransit: false,
+         },
+         features: [],
+         featureInput: "",
+         images: [],
+       });
+     } else {
+       alert("Failed to upload property: " + data.message);
+     }
+   } catch (error) {
+     console.error("Error uploading property:", error);
+     alert("An error occurred while uploading the property: " + error.message);
+   } finally {
+     setLoading(false); // 🔹 stop spinner
+   }
+ };
+
 
   return (
     <div className="container">
@@ -293,8 +297,19 @@ const PropertyUpload = () => {
             multiple
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Upload
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? (
+            <>
+              <span
+                className="spinner-border spinner-border-sm me-2"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Uploading...
+            </>
+          ) : (
+            "Upload"
+          )}
         </button>
       </form>
     </div>

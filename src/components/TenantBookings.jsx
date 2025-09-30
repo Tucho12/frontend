@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import socket from "../socket"; // Import the Socket.IO client instance
+import socket from "../socket"; 
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
@@ -102,9 +102,9 @@ const TenantBookings = ({ user }) => {
       const propertyId = selectedBooking.property._id;
       const messageData = {
         sender: userId,
-        receiver: selectedBooking.property.landlord._id, // Landlord ID
-        property: selectedBooking.property._id, // Full property object (not just ID)
-        content: newMessage, // The message content
+        receiver: selectedBooking.property.landlord._id, 
+        property: selectedBooking.property._id, 
+        content: newMessage, 
       };
 
       // Send the message data via an API request
